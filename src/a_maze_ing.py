@@ -1,6 +1,5 @@
 import sys
-from old_config_parser import MazeConfig
-from maze import Maze, MazeRenderer
+from mazegen import MazeConfig, Maze, MazeRenderer
 
 
 if __name__ == '__main__':
@@ -8,12 +7,15 @@ if __name__ == '__main__':
         print("Usage: python3 a_maze_ing.py <config_file>")
         sys.exit(1)
 
-    config = MazeConfig(config_file=sys.argv[1])
+    config = MazeConfig.read_config(sys.argv[1])
     maze = Maze(config.height,
                 config.width,
                 config.entry,
                 config.exit_,
-                config.perfect)
+                config.perfect,
+                config.algorithm,
+                config.animation,
+                config.seed)
     render = MazeRenderer(maze)
     render.render()
     render.gameloop()
