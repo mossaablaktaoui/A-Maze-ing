@@ -1,14 +1,12 @@
 # A-Maze-ing
 ## Description
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Code style: flake8](https://img.shields.io/badge/code%20style-flake8-black)](https://flake8.pycqa.org/)
-[![Mypy](https://img.shields.io/badge/type%20checked-mypy-blue)](http://mypy-lang.org/)
-
 A Python maze generator that implements **three different algorithms** (DFS, Prim, Hunt‑and‑Kill) with an **interactive Tkinter visualizer**. Watch the maze being built step by step, show/hide the shortest path, and export the result to a standard hex‑based file format.
 
-![Maze generation demo](https://via.placeholder.com/800x400?text=Screenshot+of+maze+visualization)  
-*(Add a real screenshot or GIF here)*
+<p align="center">
+  <img src="https://github.com/mossaablaktaoui/Assests/blob/main/Screenshot%20from%202026-05-08%2018-47-42.png?raw=true" width="30%" />
+  <img src="https://github.com/mossaablaktaoui/Assests/blob/main/Screenshot%20from%202026-05-08%2018-48-15.png?raw=true" width="30%" />
+</p>
 
 ## ✨ Features
 
@@ -33,8 +31,7 @@ A Python maze generator that implements **three different algorithms** (DFS, Pri
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/a-maze-ing.git
-cd a-maze-ing
+make install
 ```
 
 No extra dependencies – uses only the standard library + Tkinter.
@@ -42,7 +39,7 @@ No extra dependencies – uses only the standard library + Tkinter.
 ### Run
 
 ```bash
-python a_maze_ing.py config.txt
+make run
 ```
 
 A default `config.txt` is provided. You can edit it to change maze size, entry/exit, algorithm, etc.
@@ -87,6 +84,23 @@ PADDING=20
 | **Prim**       | Uniform randomness, many short branches, looks more “natural”.                 | Produces mazes with balanced corridor lengths. |
 | **Hunt‑and‑Kill** | Random walk until stuck, then “hunt” for an unvisited cell.                   | Unique behaviour – mixes exploration and scanning. |
 
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://github.com/mossaablaktaoui/Assests/blob/main/Screenshot%20from%202026-05-08%2018-55-33.png?raw=true" width="400"/><br>
+      <b>Prim</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/mossaablaktaoui/Assests/blob/main/Screenshot%20from%202026-05-08%2018-57-14.png?raw=true" width="400"/><br>
+      <b>BFS</b>
+    </td>
+    <td align="center">
+      <img src="https://github.com/mossaablaktaoui/Assests/blob/main/Screenshot%20from%202026-05-08%2018-58-38.png?raw=true" width="400"/><br>
+      <b>Hunt and Kill</b>
+    </td>
+  </tr>
+</table>
+
 All three can generate **perfect mazes** (spanning trees) when `PERFECT=True`. The implementation is fully deterministic when a `SEED` is provided.
 
 ## 🧩 Reusable Module
@@ -96,25 +110,38 @@ The core logic (`Maze` class and algorithm classes) lives in `mazegen/` and can 
 ```python
 from mazegen import Maze
 
-maze = Maze(width=40, height=30, algorithm="prim", perfect=True, seed=123)
-maze.generate()
+maze = Maze(
+    width=40,
+    height=30,
+    entry=(0, 0),
+    exit_=(39, 29),
+    perfect=True,
+    algorithm="prim",
+    animation=False,
+    seed=123
+)
 
-# Access internal grid (list of lists of Cells)
-grid = maze.grid
+# Generate the maze
+maze.algorithm.generate()
 
-# Export to the required file format
-maze.export_to_file("my_maze.txt", entry=(0,0), exit=(39,29))
+# Access internal cells
+cells = maze.cells
+
+# Find shortest path
+maze.find_shortest_path()
+
+# Export maze to file
+maze.write_to_file("my_maze.txt")
 ```
 
 ## 🖼️ Visual Controls
 
 When running with `ANIMATION=True`, the Tkinter window provides:
 
-- **`r`** – regenerate a new maze (same settings)
-- **`p`** – show/hide the shortest path
-- **`c`** – cycle through wall colour themes
-- **`+` / `-`** – increase/decrease animation delay
-- **`q`** – quit
+- **`1`** – regenerate a new maze (same settings)
+- **`2`** – show/hide the shortest path
+- **`3`** – cycle through wall colour themes
+- **`4`** – quit
 
 ## 🛠️ Development
 
@@ -128,5 +155,7 @@ mypy . --strict
 ---
 
 <p align="center">
-  Made with 🐍 by <a href="https://github.com/alaktaou">alaktaou</a> & <a href="https://github.com/mlaktaou">mlaktaou</a>
+  Made by <a href="https://github.com/mossaablaktaoui">Mossaab Laktaoui</a> & <a href="https://github.com/abdelfatah89">Abdelfatah Laktaoui</a>
 </p>
+
+<p align="right"><code>This project was completed in 16 February 2026.</code></p>
